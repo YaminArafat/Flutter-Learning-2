@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'rolldice.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -8,9 +10,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.teal,
-        body: SafeArea(
-            child: Column(
+        backgroundColor: Colors.red,
+        appBar: AppBar(
+          backgroundColor: Colors.red,
+          title: Text('Roll Dice'),
+          centerTitle: true,
+        ),
+        body: RollDice(),
+      ),
+    );
+  }
+}
+
+/*SafeArea(
+          Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
@@ -39,6 +52,7 @@ class MyApp extends StatelessWidget {
               height: 10,
               width: 150,
               child: Divider(
+                height: 20,
                 color: Colors.amber,
               ),
             ),
@@ -77,8 +91,4 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ],
-        )),
-      ),
-    );
-  }
-}
+        ),*/
