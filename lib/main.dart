@@ -1,7 +1,8 @@
+import 'package:angela3_i_m_rich/askme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'rolldice.dart';
+import 'askme.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
           title: Text('Roll Dice'),
           centerTitle: true,
         ),
-        body: RollDice(),
+        body: AskMe(),
       ),
     );
   }
