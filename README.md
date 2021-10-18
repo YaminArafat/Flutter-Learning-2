@@ -1,2 +1,2 @@
-# Flutter-Practice-2
+# Flutter-Learning-2
  Flutter learning from online course 
