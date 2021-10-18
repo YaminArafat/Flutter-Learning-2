@@ -35,8 +35,14 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   letterSpacing: 2),
             ),
+            SizedBox(
+              height: 10,
+              width: 150,
+              child: Divider(
+                color: Colors.amber,
+              ),
+            ),
             Card(
-              color: Colors.white,
               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
               child: ListTile(
                 leading: Icon(
@@ -54,36 +60,22 @@ class MyApp extends StatelessWidget {
               ),
             ),
             Card(
-              color: Colors.white,
-              margin: EdgeInsets.symmetric(horizontal: 45),
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 45,
-                      ),
-                    ),
-                    Icon(
-                      Icons.phone,
-                      color: Colors.green,
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Text(
-                      '++88 01771-955897',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontFamily: 'Ubuntu',
-                      ),
-                    ),
-                  ],
+              margin: EdgeInsets.symmetric(horizontal: 30),
+              child: ListTile(
+                leading: Icon(
+                  Icons.phone,
+                  color: Colors.green,
+                ),
+                title: Text(
+                  '++88 01771-955897',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'Ubuntu',
+                    color: Colors.black,
+                  ),
                 ),
               ),
-            )
+            ),
           ],
         )),
       ),
