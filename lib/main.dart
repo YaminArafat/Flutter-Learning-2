@@ -9,30 +9,33 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.teal,
         body: SafeArea(
-          child: Row(
-            //verticalDirection: VerticalDirection.up,
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            // mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                child: Center(
-                  child: Text(
-                    "Container 1",
-                  ),
-                ),
-                color: Colors.brown,
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 70,
+              backgroundImage: AssetImage('images/yaminarafat.jpg'),
+            ),
+            Text(
+              "Yamin Arafat",
+              style: TextStyle(
+                fontSize: 40,
+                fontFamily: 'Pacifico',
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(
-                width: 50,
-              ),
-              Container(
-                child: Center(child: Text('Container 2')),
-                color: Colors.deepPurple,
-              )
-            ],
-          ),
-        ),
+            ),
+            Text(
+              'CSE KUET',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Ubuntu',
+                  color: Colors.grey[850],
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2),
+            )
+          ],
+        )),
       ),
     );
   }
