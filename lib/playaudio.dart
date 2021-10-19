@@ -13,159 +13,49 @@ class _PlayAudioState extends State<PlayAudio> {
     player.play('note$noteNum.wav');
   }
 
+  //Widget
+  Expanded buildFunc(
+      {Color color = Colors.red,
+      int noteNum = 1,
+      Color buttonColor = Colors.white}) {
+    return Expanded(
+      child: Container(
+        color: color,
+        height: 50,
+        child: TextButton(
+          child: Center(
+            child: Text(
+              'Click Me',
+              style: TextStyle(
+                color: buttonColor,
+              ),
+            ),
+          ),
+          onPressed: () {
+            setState(() {
+              playAudio(noteNum);
+            });
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(
-            child: Container(
-              color: Colors.blue,
-              height: 50,
-              child: TextButton(
-                child: Center(
-                  child: Text(
-                    'Click Me',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    playAudio(2);
-                  });
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.red,
-              height: 50,
-              child: TextButton(
-                onPressed: () {
-                  setState(() {
-                    playAudio(1);
-                  });
-                },
-                child: Center(
-                  child: Text(
-                    'Click Me',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.yellow,
-              height: 50,
-              child: TextButton(
-                child: Center(
-                  child: Text(
-                    'Click Me',
-                    style: TextStyle(
-                      color: Colors.blue,
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    playAudio(3);
-                  });
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.green,
-              height: 50,
-              child: TextButton(
-                child: Center(
-                  child: Text(
-                    'Click Me',
-                    style: TextStyle(
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    playAudio(4);
-                  });
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.purple,
-              height: 50,
-              child: TextButton(
-                child: Center(
-                  child: Text(
-                    'Click Me',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    playAudio(5);
-                  });
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.brown,
-              height: 50,
-              child: TextButton(
-                child: Center(
-                  child: Text(
-                    'Click Me',
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    playAudio(1);
-                  });
-                },
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              color: Colors.deepOrange,
-              height: 50,
-              child: TextButton(
-                child: Center(
-                  child: Text(
-                    'Click Me',
-                    style: TextStyle(
-                      color: Colors.green,
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    playAudio(7);
-                  });
-                },
-              ),
-            ),
-          ),
+          buildFunc(color: Colors.blue, noteNum: 1, buttonColor: Colors.white),
+          buildFunc(color: Colors.red, noteNum: 2, buttonColor: Colors.amber),
+          buildFunc(
+              color: Colors.yellow, noteNum: 3, buttonColor: Colors.green),
+          buildFunc(color: Colors.green, noteNum: 4, buttonColor: Colors.brown),
+          buildFunc(
+              color: Colors.purple, noteNum: 5, buttonColor: Colors.white),
+          buildFunc(color: Colors.brown, noteNum: 3, buttonColor: Colors.white),
+          buildFunc(color: Colors.orange, noteNum: 7, buttonColor: Colors.red),
         ],
       ),
     );
