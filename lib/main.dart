@@ -1,8 +1,6 @@
-import 'package:angela3_i_m_rich/askme.dart';
+import 'package:angela3_i_m_rich/playaudio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'askme.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,13 +9,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.red,
-          title: Text('Roll Dice'),
+          title: Text('Flutter Learning'),
           centerTitle: true,
         ),
-        body: AskMe(),
+        body: PlayAudio(),
       ),
     );
   }
