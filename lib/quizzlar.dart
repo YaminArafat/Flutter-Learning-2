@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Quizzlar extends StatefulWidget {
@@ -22,12 +23,35 @@ class _Quizzlar extends State<Quizzlar> {
     'Staurday comes after Sunday': false,
   };
   int quesNo = Random().nextInt(4);
+  int score = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Card(
+            margin: EdgeInsets.symmetric(
+              horizontal: 60,
+            ),
+            color: Colors.blue,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 10,
+                bottom: 10,
+              ),
+              child: Center(
+                child: Text(
+                  score.toString(),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
+            ),
+          ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -71,6 +95,7 @@ class _Quizzlar extends State<Quizzlar> {
                       Icons.check,
                       color: Colors.green,
                     ));
+                    score++;
                   }
                   if (quesAns[questions[quesNo]] == false) {
                     scoreKeeper.add(Icon(
@@ -117,6 +142,7 @@ class _Quizzlar extends State<Quizzlar> {
                       Icons.check,
                       color: Colors.green,
                     ));
+                    score++;
                   }
                   quesNo = Random().nextInt(4);
                 });
@@ -125,8 +151,11 @@ class _Quizzlar extends State<Quizzlar> {
           ),
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Row(
-              children: scoreKeeper,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: scoreKeeper,
+              ),
             ),
           )
         ],
