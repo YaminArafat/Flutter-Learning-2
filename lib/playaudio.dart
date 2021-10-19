@@ -54,7 +54,7 @@ class _PlayAudioState extends State<PlayAudio> {
           buildFunc(color: Colors.green, noteNum: 4, buttonColor: Colors.brown),
           buildFunc(
               color: Colors.purple, noteNum: 5, buttonColor: Colors.white),
-          buildFunc(color: Colors.brown, noteNum: 3, buttonColor: Colors.white),
+          buildFunc(color: Colors.brown, noteNum: 1, buttonColor: Colors.white),
           buildFunc(color: Colors.orange, noteNum: 7, buttonColor: Colors.red),
         ],
       ),

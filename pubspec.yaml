@@ -57,6 +57,10 @@ flutter:
     fonts:
       - asset: fonts/Ubuntu-Regular.ttf
       - asset: fonts/ubuntu-Bold.ttf
+  - family: Ubuntu
+    fonts:
+      - asset: fonts/Oswald-Regular.ttf
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
