@@ -50,6 +50,8 @@ class _Quizzlar extends State<Quizzlar> {
                     score = 0;
                     if (panelController.isPanelOpen) {
                       panelController.close();
+                      quesController.clear();
+                      ansController.clear();
                     }
                   });
                 },
@@ -99,6 +101,8 @@ class _Quizzlar extends State<Quizzlar> {
               setState(() {
                 if (panelController.isPanelOpen) {
                   panelController.close();
+                  quesController.clear();
+                  ansController.clear();
                 } else
                   panelController.open();
               });
@@ -216,7 +220,7 @@ class _Quizzlar extends State<Quizzlar> {
             ),
             controller: panelController,
             minHeight: 40,
-            maxHeight: 300,
+            maxHeight: 200,
             collapsed: Column(
               children: [
                 Center(
