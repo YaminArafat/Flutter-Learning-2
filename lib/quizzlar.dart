@@ -1,6 +1,7 @@
-import 'package:angela3_i_m_rich/questions.dart';
+import 'package:angela3_i_m_rich/quizMain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class Quizzlar extends StatefulWidget {
@@ -9,6 +10,12 @@ class Quizzlar extends StatefulWidget {
 }
 
 class _Quizzlar extends State<Quizzlar> {
+  double screenSize(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    return width;
+  }
+
+  QuizMain quizmain = QuizMain();
   List<Icon> scoreKeeper = [];
   /*List<String> questions = [
     'Dhaka is the capital of Bangladesh',
@@ -22,14 +29,73 @@ class _Quizzlar extends State<Quizzlar> {
     'Friday comes after Thursday': true,
     'Staurday comes after Sunday': false,
   };*/
-  List<Questions> questions = [
-    Questions(q: 'Dhaka is the capital of Bangladesh', a: true),
-    Questions(q: 'Khulna is the capital of Bangladesh', a: false),
-    Questions(q: 'Friday comes after Thursday', a: true),
-    Questions(q: 'Saturday comes after Sunday', a: false),
-  ];
-  int quesNo = 0;
   int score = 0;
+  void ansHistory(bool givenAns) {
+    setState(() {
+      if (quizmain.getAns() == givenAns) {
+        scoreKeeper.add(
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
+        score++;
+      } else {
+        scoreKeeper.add(
+          Icon(
+            Icons.close,
+            color: Colors.red,
+          ),
+        );
+      }
+      if (quizmain.isFinished()) {
+        Alert(
+            context: context,
+            title: 'Finished',
+            desc: 'No more questions left!',
+            buttons: [
+              DialogButton(
+                  color: Colors.red,
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontFamily: 'Ubuntu',
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    setState(() {
+                      scoreKeeper.clear();
+                      score = 0;
+                      quizmain.setQuesNo();
+                    });
+                  }),
+              DialogButton(
+                  child: Text(
+                    'Retry',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontFamily: 'Ubuntu',
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    setState(() {
+                      scoreKeeper.clear();
+                      score = 0;
+                      quizmain.setQuesNo();
+                    });
+                  })
+            ]).show();
+      } else {
+        quizmain.nextQues();
+      }
+    });
+  }
+
   String? quesError, ansError;
   TextEditingController quesController = TextEditingController();
   TextEditingController ansController = TextEditingController();
@@ -50,6 +116,9 @@ class _Quizzlar extends State<Quizzlar> {
                     score = 0;
                     if (panelController.isPanelOpen) {
                       panelController.close();
+                      quesController.clear();
+                      ansController.clear();
+                    } else {
                       quesController.clear();
                       ansController.clear();
                     }
@@ -84,7 +153,7 @@ class _Quizzlar extends State<Quizzlar> {
               ),
               child: Center(
                 child: Text(
-                  questions[quesNo].questionText,
+                  quizmain.getQues(),
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Ubuntu',
@@ -101,8 +170,6 @@ class _Quizzlar extends State<Quizzlar> {
               setState(() {
                 if (panelController.isPanelOpen) {
                   panelController.close();
-                  quesController.clear();
-                  ansController.clear();
                 } else
                   panelController.open();
               });
@@ -131,27 +198,7 @@ class _Quizzlar extends State<Quizzlar> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  if (quesNo < questions.length) {
-                    //if (quesAns[questions[quesNo]] == true) {
-                    if (questions[quesNo].quesAns == true) {
-                      scoreKeeper.add(Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      ));
-                      score++;
-                    }
-                    //if (quesAns[questions[quesNo]] == false) {
-                    if (questions[quesNo].quesAns == false) {
-                      scoreKeeper.add(Icon(
-                        Icons.close,
-                        color: Colors.red,
-                      ));
-                    }
-                  }
-                  quesNo++;
-                  if (quesNo == questions.length) quesNo = 0;
-                });
+                ansHistory(true);
               },
             ),
           ),
@@ -175,29 +222,7 @@ class _Quizzlar extends State<Quizzlar> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  if (quesNo < questions.length) {
-                    //if (quesAns[questions[quesNo]] == true) {
-                    if (questions[quesNo].quesAns == true) {
-                      scoreKeeper.add(
-                        Icon(
-                          Icons.close,
-                          color: Colors.red,
-                        ),
-                      );
-                    }
-                    // if (quesAns[questions[quesNo]] == false) {
-                    if (questions[quesNo].quesAns == false) {
-                      scoreKeeper.add(Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      ));
-                      score++;
-                    }
-                  }
-                  quesNo++;
-                  if (quesNo == questions.length) quesNo = 0;
-                });
+                ansHistory(false);
               },
             ),
           ),
@@ -329,11 +354,8 @@ class _Quizzlar extends State<Quizzlar> {
                         }
                         if (quesError == null && ansError == null) {
                           setState(() {
-                            questions.add(Questions(
-                                q: quesController.text,
-                                a: ansController.text == 'true'
-                                    ? true
-                                    : false));
+                            quizmain.addQues(
+                                q: quesController.text, a: ansController.text);
                             quesController.clear();
                             ansController.clear();
                           });
