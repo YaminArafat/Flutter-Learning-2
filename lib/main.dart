@@ -1,4 +1,4 @@
-import 'package:angela3_i_m_rich/quizzlar.dart';
+import 'package:angela3_i_m_rich/destiny.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
           title: Text('Flutter Learning'),
           centerTitle: true,
         ),
-        body: Quizzlar(),
+        body: Destiny(),
       ),
     );
   }

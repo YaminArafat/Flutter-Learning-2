@@ -53,6 +53,14 @@ class _Quizzlar extends State<Quizzlar> {
             context: context,
             title: 'Finished',
             desc: 'No more questions left!',
+            closeFunction: () {
+              Navigator.pop(context);
+              setState(() {
+                scoreKeeper.clear();
+                score = 0;
+                quizmain.setQuesNo();
+              });
+            },
             buttons: [
               DialogButton(
                   color: Colors.red,
