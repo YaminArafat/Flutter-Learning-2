@@ -1,4 +1,4 @@
-import 'package:angela3_i_m_rich/destiny.dart';
+import 'package:angela3_i_m_rich/bmiCalculatorMain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      home: Scaffold(
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Color(0xFF1E1531),
+        scaffoldBackgroundColor: Color(0xFF1E1531),
+      ),
+      /*home: Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Colors.red,
@@ -16,7 +20,8 @@ class MyApp extends StatelessWidget {
           centerTitle: true,
         ),
         body: Destiny(),
-      ),
+        ),*/
+      home: BMIcalc(),
     );
   }
 }
