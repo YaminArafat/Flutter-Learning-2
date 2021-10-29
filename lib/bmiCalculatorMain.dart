@@ -1,5 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'gendercontent.dart';
+import 'reusablecard.dart';
+
+const Color color = Color(0xFF1D1E33);
 
 class BMIcalc extends StatefulWidget {
   @override
@@ -27,33 +33,43 @@ class _BMIcalcState extends State<BMIcalc> {
               children: [
                 Expanded(
                   child: ReusableCard(
-                    color: Color(0xFF1D1E33),
+                    color: color,
+                    cardChild: Center(
+                      child: GenderContent(
+                        fontAwesomeIcons: FontAwesomeIcons.mars,
+                        label: 'MALE',
+                      ),
+                    ),
                   ),
                 ),
                 Expanded(
-                  child: ReusableCard(),
+                  child: ReusableCard(
+                    color: color,
+                    cardChild: GenderContent(
+                      fontAwesomeIcons: FontAwesomeIcons.venus,
+                      label: "FEMALE",
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
           Expanded(
-            child: Container(
-              margin: EdgeInsets.all(20),
-              /*height: height / 3 - 20,*/
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Color(0xFF1D1E33),
-              ),
-            ),
-          ),
+              child: ReusableCard(
+            color: color,
+          )),
           Expanded(
             child: Row(
               children: [
                 Expanded(
-                  child: ReusableCard(),
+                  child: ReusableCard(
+                    color: color,
+                  ),
                 ),
                 Expanded(
-                  child: ReusableCard(),
+                  child: ReusableCard(
+                    color: color,
+                  ),
                 ),
               ],
             ),
@@ -69,29 +85,6 @@ class _BMIcalcState extends State<BMIcalc> {
           child: Icon(Icons.add),
         ),
       ),*/
-    );
-  }
-}
-
-class ReusableCard extends StatelessWidget {
-  /*const ReusableCard({
-    Key? key,
-  }) : super(key: key);*/
-
-  Color? color;
-
-  ReusableCard({this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(20.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: Color(0xFF1D1E33),
-      ),
-      /*height: height / 3 - 40,
-      width: .5 * width - 30,*/
     );
   }
 }
