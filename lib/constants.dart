@@ -6,6 +6,6 @@ const bottomContainerColor = Color(0xFFEB1555);
 
 const labelTextStyle = TextStyle(
   fontFamily: 'Ubuntu',
-  fontWeight: FontWeight.bold,
+  // fontWeight: FontWeight.bold,
   fontSize: 20,
 );

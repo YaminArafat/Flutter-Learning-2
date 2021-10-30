@@ -15,10 +15,16 @@ enum GenderType {
   MALE,
   FEMALE,
 }
+enum CardType {
+  Weight,
+  Age,
+}
 
 class _BMIcalcState extends State<BMIcalc> {
   GenderType? selectedGender;
   int height = 100;
+  int weight = 15;
+  int age = 10;
   /*Color maleCardColor = deactiveColor;
   Color femaleCardColor = deactiveColor;
   void setTapColor(GenderType genderType) {
@@ -44,6 +50,72 @@ class _BMIcalcState extends State<BMIcalc> {
       }
     });
   }*/
+  Column weightAgeCard(String text, CardType cardType) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          text,
+          style: labelTextStyle,
+        ),
+        Text(
+          cardType == CardType.Weight ? weight.toString() : age.toString(),
+          style: TextStyle(
+            fontFamily: "Ubuntu",
+            fontWeight: FontWeight.bold,
+            fontSize: 60,
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FloatingActionButton(
+              backgroundColor: deactiveColor,
+              onPressed: () {
+                setState(() {
+                  cardType == CardType.Weight ? weight-- : age--;
+                });
+              },
+              child: Icon(
+                //Icons.remove,
+                FontAwesomeIcons.minus,
+                size: 20,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              width: 5,
+            ),
+            FloatingActionButton(
+              backgroundColor: deactiveColor,
+              onPressed: () {
+                setState(() {
+                  cardType == CardType.Weight ? weight++ : age++;
+                });
+              },
+              child: Icon(
+                //Icons.add,
+                FontAwesomeIcons.plus,
+                size: 20,
+                color: Colors.white,
+              ),
+              /*Text(
+                '+',
+                style: TextStyle(
+                  fontFamily: "Ubuntu",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),*/
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,11 +234,13 @@ class _BMIcalcState extends State<BMIcalc> {
                 Expanded(
                   child: ReusableCard(
                     color: activeColor,
+                    cardChild: weightAgeCard('Weight', CardType.Weight),
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
                     color: activeColor,
+                    cardChild: weightAgeCard('Age', CardType.Age),
                   ),
                 ),
               ],
