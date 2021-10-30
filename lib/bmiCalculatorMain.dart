@@ -2,52 +2,109 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'constants.dart';
 import 'gendercontent.dart';
 import 'reusablecard.dart';
-
-const Color color = Color(0xFF1D1E33);
 
 class BMIcalc extends StatefulWidget {
   @override
   _BMIcalcState createState() => _BMIcalcState();
 }
 
+enum GenderType {
+  MALE,
+  FEMALE,
+}
+
 class _BMIcalcState extends State<BMIcalc> {
+  GenderType? selectedGender;
+  int height = 100;
+  /*Color maleCardColor = deactiveColor;
+  Color femaleCardColor = deactiveColor;
+  void setTapColor(GenderType genderType) {
+    setState(() {
+      // genderType == GenderType.MALE ? maleCardColor = activeColor;femaleCardColor = deactiveColor;:femaleCardColor = activeColor;maleCardColor=deactiveColor;
+      if (genderType == GenderType.MALE) {
+        if (maleCardColor == deactiveColor) {
+          maleCardColor = activeColor;
+          if (femaleCardColor == activeColor) {
+            femaleCardColor = deactiveColor;
+          }
+        } else
+          maleCardColor = deactiveColor;
+      } else {
+        if (femaleCardColor == deactiveColor) {
+          femaleCardColor = activeColor;
+          if (maleCardColor == activeColor) {
+            maleCardColor = deactiveColor;
+          }
+        } else {
+          femaleCardColor = deactiveColor;
+        }
+      }
+    });
+  }*/
+
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
+    // var height = MediaQuery.of(context).size.height;
+    // var width = MediaQuery.of(context).size.width;
     return new Scaffold(
       appBar: AppBar(
         title: Center(
           child: Text(
             'BMI Calculator',
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Ubuntu',
+            ),
           ),
         ),
       ),
       body: Column(
-        //crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Row(
               children: [
                 Expanded(
                   child: ReusableCard(
-                    color: color,
+                    onPress: () {
+                      setState(() {
+                        if (selectedGender == GenderType.MALE)
+                          selectedGender = null;
+                        else
+                          selectedGender = GenderType.MALE;
+                      });
+                    },
+                    color: selectedGender == GenderType.MALE
+                        ? activeColor
+                        : deactiveColor,
                     cardChild: Center(
                       child: GenderContent(
                         fontAwesomeIcons: FontAwesomeIcons.mars,
-                        label: 'MALE',
+                        label: 'Male',
                       ),
                     ),
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
-                    color: color,
+                    onPress: () {
+                      setState(() {
+                        if (selectedGender == GenderType.FEMALE)
+                          selectedGender = null;
+                        else
+                          selectedGender = GenderType.FEMALE;
+                      });
+                    },
+                    color: selectedGender == GenderType.FEMALE
+                        ? activeColor
+                        : deactiveColor,
                     cardChild: GenderContent(
                       fontAwesomeIcons: FontAwesomeIcons.venus,
-                      label: "FEMALE",
+                      label: "Female",
                     ),
                   ),
                 ),
@@ -55,25 +112,70 @@ class _BMIcalcState extends State<BMIcalc> {
             ),
           ),
           Expanded(
-              child: ReusableCard(
-            color: color,
-          )),
+            child: ReusableCard(
+              color: activeColor,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Height',
+                    style: labelTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        height.toString(),
+                        style: TextStyle(
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 60,
+                        ),
+                      ),
+                      Text(
+                        'cm',
+                        style: labelTextStyle,
+                      ),
+                    ],
+                  ),
+                  Slider(
+                    value: height.toDouble(),
+                    min: 50,
+                    max: 200,
+                    activeColor: bottomContainerColor,
+                    inactiveColor: Colors.grey,
+                    onChanged: (double newValue) {
+                      setState(() {
+                        height = newValue.round();
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
           Expanded(
             child: Row(
               children: [
                 Expanded(
                   child: ReusableCard(
-                    color: color,
+                    color: activeColor,
                   ),
                 ),
                 Expanded(
                   child: ReusableCard(
-                    color: color,
+                    color: activeColor,
                   ),
                 ),
               ],
             ),
           ),
+          Container(
+            color: bottomContainerColor,
+            height: 60,
+          )
         ],
       ),
       /*floatingActionButton: Theme(

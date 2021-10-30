@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'constants.dart';
+
 class GenderContent extends StatelessWidget {
   final IconData fontAwesomeIcons;
   final String label;
@@ -20,11 +22,7 @@ class GenderContent extends StatelessWidget {
         ),
         Text(
           label,
-          style: TextStyle(
-            fontFamily: 'Ubuntu',
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
+          style: labelTextStyle,
         )
       ],
     );
