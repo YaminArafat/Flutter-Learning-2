@@ -246,9 +246,27 @@ class _BMIcalcState extends State<BMIcalc> {
               ],
             ),
           ),
+
+          ///also doable with wraping the container with Gesture detector
           Container(
             color: bottomContainerColor,
             height: 60,
+            child: TextButton(
+              child: Text(
+                'Calculate',
+                style: TextStyle(
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/results');
+                /*Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ResultsPage()));*/
+              },
+            ),
           )
         ],
       ),
