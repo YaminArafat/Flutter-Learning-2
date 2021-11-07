@@ -1,9 +1,12 @@
+import 'package:angela3_i_m_rich/bmifunctionality.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'bottombutton.dart';
 import 'constants.dart';
 import 'gendercontent.dart';
+import 'resultsBMI.dart';
 import 'reusablecard.dart';
 
 class BMIcalc extends StatefulWidget {
@@ -72,15 +75,19 @@ class _BMIcalcState extends State<BMIcalc> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FloatingActionButton(
-              backgroundColor: deactiveColor,
+            RawMaterialButton(
+              fillColor: deactiveColor,
+              constraints: BoxConstraints.tightFor(
+                width: 56.0,
+                height: 56.0,
+              ),
+              shape: CircleBorder(),
               onPressed: () {
                 setState(() {
                   cardType == CardType.Weight ? weight-- : age--;
                 });
               },
               child: Icon(
-                //Icons.remove,
                 FontAwesomeIcons.minus,
                 size: 20,
                 color: Colors.white,
@@ -89,27 +96,21 @@ class _BMIcalcState extends State<BMIcalc> {
             SizedBox(
               width: 5,
             ),
-            FloatingActionButton(
-              backgroundColor: deactiveColor,
+            RawMaterialButton(
+              constraints: BoxConstraints.tightForFinite(
+                height: 56,
+                width: 56,
+              ),
               onPressed: () {
                 setState(() {
                   cardType == CardType.Weight ? weight++ : age++;
                 });
               },
               child: Icon(
-                //Icons.add,
                 FontAwesomeIcons.plus,
                 size: 20,
                 color: Colors.white,
               ),
-              /*Text(
-                '+',
-                style: TextStyle(
-                  fontFamily: "Ubuntu",
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),*/
             ),
           ],
         ),
@@ -247,27 +248,54 @@ class _BMIcalcState extends State<BMIcalc> {
             ),
           ),
 
-          ///also doable with wraping the container with Gesture detector
-          Container(
+          ///also doable with wraping the container with Gesture detector//container button
+          BottomButton(
+            buttonText: 'CALCULATE',
+            onPressed: () {
+              // Navigator.pushNamed(context, '/results');
+              BMIFunctionality output =
+                  BMIFunctionality(height: height, weight: weight);
+              /*setState(() {
+                bmiScore = output.calculateBMI();
+                result = output.getResults();
+                feedback = output.getFeedback();
+              });*/
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResultsPage(
+                            result: output.getResults(output.calculateBMI()),
+                            bmiScore: output.calculateBMI(),
+                            feedback: output.getFeedback(output.calculateBMI()),
+                          )));
+            },
+          ),
+          /*Container(
             color: bottomContainerColor,
             height: 60,
-            child: TextButton(
-              child: Text(
-                'Calculate',
-                style: TextStyle(
-                  fontFamily: 'Ubuntu',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  color: Colors.white,
-                ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                bottom: 10,
               ),
-              onPressed: () {
-                Navigator.pushNamed(context, '/results');
-                /*Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ResultsPage()));*/
-              },
+              child: TextButton(
+                child: Text(
+                  'CALCULATE',
+                  style: TextStyle(
+                    fontFamily: 'Ubuntu',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    color: Colors.white,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/results');
+                  */ /*Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ResultsPage()));*/ /*
+                },
+              ),
             ),
-          )
+          ),*/
         ],
       ),
       /*floatingActionButton: Theme(

@@ -2,7 +2,7 @@ import 'package:angela3_i_m_rich/bmiCalculatorMain.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'resultsBMI.dart';
+import 'bmiCalculatorMain.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,9 +24,9 @@ class MyApp extends StatelessWidget {
         body: Destiny(),
         ),*/
       home: BMIcalc(),
-      routes: {
+      /*routes: {
         '/results': (context) => ResultsPage(),
-      },
+      },*/
     );
   }
 }
