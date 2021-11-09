@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.angela3_i_m_rich">
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
    <application
         android:label="angela3_i_m_rich"
         android:icon="@mipmap/ic_launcher">
