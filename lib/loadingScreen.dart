@@ -1,6 +1,8 @@
-import 'package:angela3_i_m_rich/location.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -13,6 +15,19 @@ class _LoadingState extends State<LoadingScreen> {
     // TODO: implement initState
     super.initState();
     getCurrentLocation();
+    getData();
+  }
+
+  void getData() async {
+    http.Response response = await http.get(Uri.parse(
+        'http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=331533c0cc2197e929ea79cdb2a70e33'));
+    String data = response.body;
+    var temp = jsonDecode(data)['main']['temp'];
+    var id = jsonDecode(data)['weather'][0]['id'];
+    var city = jsonDecode(data)['name'];
+    print(temp);
+    print(id);
+    print(city);
   }
 
   /*late double lat;
@@ -21,8 +36,13 @@ class _LoadingState extends State<LoadingScreen> {
   void getCurrentLocation() async {
     //await location.getLocation();
     print('objryhredhdect');
-    Position position = await Geolocator.getCurrentPosition();
-    print(position);
+    try {
+      var position = await Geolocator.getCurrentPosition(
+          forceAndroidLocationManager: true);
+      print(position);
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
