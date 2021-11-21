@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:angela3_i_m_rich/weatherDetails.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'cityscreen.dart';
 
 class LocationScreen extends StatefulWidget {
   final String data;
@@ -12,7 +15,7 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  late double temp;
+  late int temp;
   late double lat;
   late double lon;
   late String location;
@@ -20,6 +23,11 @@ class _LocationScreenState extends State<LocationScreen> {
   late int humidity;
   late double windSpeed;
   late String description;
+  late String main;
+  late int feelsLike;
+  late int visibility;
+  late int condition;
+  WeatherDetails weatherDetails = WeatherDetails();
   @override
   void initState() {
     super.initState();
@@ -27,7 +35,8 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   void updateUI(dynamic data) {
-    temp = jsonDecode(data)['main']['temp'] - 273;
+    double t = jsonDecode(data)['main']['temp'];
+    temp = t.toInt();
     lat = jsonDecode(data)['coord']['lat'];
     lon = jsonDecode(data)['coord']['lon'];
     location = jsonDecode(data)['name'];
@@ -35,13 +44,19 @@ class _LocationScreenState extends State<LocationScreen> {
     humidity = jsonDecode(data)['main']['humidity'];
     windSpeed = jsonDecode(data)['wind']['speed'];
     description = jsonDecode(data)['weather'][0]['description'];
+    main = jsonDecode(data)['weather'][0]['main'];
+    t = jsonDecode(data)['main']['feels_like'];
+    feelsLike = t.toInt();
+    visibility = jsonDecode(data)['visibility'];
+    condition = jsonDecode(data)['weather'][0]['id'];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        color: Colors.blueAccent,
+        /*decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('images/weather5.jpg'),
             fit: BoxFit.cover,
@@ -49,7 +64,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 Colors.white.withOpacity(0.5), BlendMode.dstATop),
           ),
         ),
-        constraints: BoxConstraints.expand(),
+        constraints: BoxConstraints.expand(),*/
         child: SafeArea(
           child: Column(
             children: [
@@ -57,11 +72,18 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return CityScreen();
+                        }));
+                      });
+                    },
                     child: Icon(
                       Icons.near_me,
                       size: 50,
-                      color: Colors.blue,
+                      color: Colors.white,
                     ),
                   ),
                   TextButton(
@@ -69,7 +91,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     child: Icon(
                       Icons.location_city,
                       size: 50.0,
-                      color: Colors.green,
+                      color: Colors.white,
                     ),
                   ),
                 ],
@@ -80,7 +102,7 @@ class _LocationScreenState extends State<LocationScreen> {
               Text(
                 location,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontFamily: 'Ubuntu',
                   fontWeight: FontWeight.bold,
                   fontSize: 50,
@@ -118,47 +140,74 @@ class _LocationScreenState extends State<LocationScreen> {
               SizedBox(
                 height: 50,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    temp.toStringAsFixed(1),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Ubuntu',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 130,
-                    ),
-                  ),
-                  Text(
-                    'emo',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 30,
+              Text(
+                temp.toString() + '°C',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 130,
+                ),
               ),
               Column(
                 children: [
                   Text(
-                    description.toUpperCase(),
+                    'Feels Like ' + feelsLike.toString() + '°C',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.blue[200],
                       fontFamily: 'Ubuntu',
                       fontWeight: FontWeight.bold,
-                      fontSize: 30,
+                      fontSize: 15,
                     ),
                   ),
                   SizedBox(
                     height: 30,
                   ),
                   Text(
-                    'Humidity: ' + humidity.toString(),
+                    weatherDetails.getWeatherIcon(condition),
                     style: TextStyle(
-                      color: Colors.lightGreenAccent,
+                      color: Colors.white,
+                      fontFamily: 'Ubuntu',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 70,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        main + ',',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        description,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    'Humidity: ' + humidity.toString() + ' %',
+                    style: TextStyle(
+                      color: Colors.blue[200],
                       fontFamily: 'Ubuntu',
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -168,9 +217,9 @@ class _LocationScreenState extends State<LocationScreen> {
                     height: 10,
                   ),
                   Text(
-                    'Pressure: ' + pressure.toString(),
+                    'Pressure: ' + pressure.toString() + ' Pa',
                     style: TextStyle(
-                      color: Colors.lightGreenAccent,
+                      color: Colors.blue[200],
                       fontFamily: 'Ubuntu',
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
@@ -180,15 +229,39 @@ class _LocationScreenState extends State<LocationScreen> {
                     height: 10,
                   ),
                   Text(
-                    'Wind Speed: ' + windSpeed.toString(),
+                    'Wind Speed: ' + windSpeed.toString() + ' Km/h',
                     style: TextStyle(
-                      color: Colors.lightGreenAccent,
+                      color: Colors.blue[200],
+                      fontFamily: 'Ubuntu',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Visibility: ' + visibility.toString() + ' Km',
+                    style: TextStyle(
+                      color: Colors.blue[200],
                       fontFamily: 'Ubuntu',
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
                     ),
                   ),
                 ],
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Text(
+                weatherDetails.getMessage(temp),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Ubuntu',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             ],
           ),
