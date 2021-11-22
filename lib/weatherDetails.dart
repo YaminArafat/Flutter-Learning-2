@@ -29,7 +29,7 @@ class WeatherDetails {
       return 'Quiet cold. A cup of 🫖 will keep you warm';
     } else if (temp >= 15) {
       return 'It\'s very cold 🌞. Why not drink ☕';
-    } else if (temp >= 10) {
+    } else if (temp < 15) {
       return 'It\'s freezing cold 🥶. Don\'t forget to bring 🧥';
     }
     return '';
