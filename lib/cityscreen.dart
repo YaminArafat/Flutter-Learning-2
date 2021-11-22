@@ -94,28 +94,37 @@ class _CityScreenState extends State<CityScreen> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      if (searchedLocation.text.isEmpty) {
+                  onPressed: () async {
+                    if (searchedLocation.text.isEmpty) {
+                      setState(() {
                         errorLocation = 'This field can not be empty';
-                      } else if (searchedLocation.text
-                          .contains(RegExp(r'[0-9]'))) {
+                      });
+                    } else if (searchedLocation.text
+                        .contains(RegExp(r'[0-9]'))) {
+                      setState(() {
                         errorLocation = 'Invalid Location. Try again.';
                         searchedLocation.clear();
-                      } else if (searchedLocation.text.isNotEmpty) {
-                        //errorLocation = null;
+                      });
+                    } else if (searchedLocation.text.isNotEmpty) {
+                      //errorLocation = null;
+                      setState(() {
                         cityName = searchedLocation.text.toLowerCase();
-                        var searchedLocationData =
-                            parseData.getSearchedLocationData(cityName);
-                        Navigator.pop(context, searchedLocationData);
-                        /*Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      });
+                      var searchedLocationData;
+                      try {
+                        searchedLocationData =
+                            await parseData.getSearchedLocationData(cityName);
+                      } catch (e) {
+                        searchedLocationData = e;
+                      }
+                      Navigator.pop(context, searchedLocationData);
+                      /*Navigator.push(context, MaterialPageRoute(builder: (context) {
       return LocationScreen(data: searchedLocationData);
     }));*/
-                      }
-                    });
+                    }
                   },
                   child: Text(
-                    'Search',
+                    'Get',
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'Ubuntu',

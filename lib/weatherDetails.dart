@@ -8,10 +8,14 @@ const weatherLink = 'http://api.openweathermap.org/data/2.5/weather';
 
 class WeatherDetails {
   Future<dynamic> getSearchedLocationData(String cityName) async {
-    NetworkHelper getInfo =
-        NetworkHelper('$weatherLink?q=$cityName&appid=$apiKey&units=metric');
-    var searchedLocationData = await getInfo.getLocationData();
-    return searchedLocationData;
+    try {
+      NetworkHelper getInfo =
+          NetworkHelper('$weatherLink?q=$cityName&appid=$apiKey&units=metric');
+      var searchedLocationData = await getInfo.getLocationData();
+      return searchedLocationData;
+    } catch (e) {
+      return e;
+    }
   }
 
   Future<dynamic> getCurrentLocationData() async {
@@ -28,7 +32,9 @@ class WeatherDetails {
   }
 
   String getWeatherIcon(int condition) {
-    if (condition < 300) {
+    if (condition == -1) {
+      return '✖';
+    } else if (condition < 300) {
       return '⛈';
     } else if (condition < 400) {
       return '🌧';
@@ -48,17 +54,21 @@ class WeatherDetails {
     return '';
   }
 
-  String getMessage(int temp) {
-    if (temp >= 30) {
-      return 'Very hot day. You should get a 🍦';
-    } else if (temp >= 25) {
-      return 'It\'s a warm day. Cold 🚿 is a good idea';
-    } else if (temp >= 20) {
-      return 'Quiet cold. A cup of 🫖 will keep you warm';
-    } else if (temp >= 15) {
-      return 'It\'s very cold 🌞. Why not drink ☕';
-    } else if (temp < 15) {
-      return 'It\'s freezing cold 🥶. Don\'t forget to bring 🧥';
+  String getMessage(var temp) {
+    try {
+      if (temp >= 30) {
+        return 'Very hot day. You should get a 🍦';
+      } else if (temp >= 25) {
+        return 'It\'s a warm day. Cold 🚿 is a good idea';
+      } else if (temp >= 20) {
+        return 'Quiet cold. A cup of 🫖 will keep you warm';
+      } else if (temp >= 15) {
+        return 'It\'s very cold 🌞. Why not drink ☕';
+      } else if (temp < 15) {
+        return 'It\'s freezing cold 🥶. Don\'t forget to bring 🧥';
+      }
+    } catch (e) {
+      return 'No data available right now 😔';
     }
     return '';
   }

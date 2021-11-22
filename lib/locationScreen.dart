@@ -28,6 +28,7 @@ class _LocationScreenState extends State<LocationScreen> {
   late var feelsLike;
   late var visibility;
   late var condition;
+  String coma = ',';
   WeatherDetails weatherDetails = WeatherDetails();
   @override
   void initState() {
@@ -36,20 +37,36 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   void updateUI(dynamic data) {
-    var t = jsonDecode(data)['main']['temp'];
-    temp = t.toInt();
-    lat = jsonDecode(data)['coord']['lat'];
-    lon = jsonDecode(data)['coord']['lon'];
-    location = jsonDecode(data)['name'];
-    pressure = jsonDecode(data)['main']['pressure'];
-    humidity = jsonDecode(data)['main']['humidity'];
-    windSpeed = jsonDecode(data)['wind']['speed'];
-    description = jsonDecode(data)['weather'][0]['description'];
-    main = jsonDecode(data)['weather'][0]['main'];
-    t = jsonDecode(data)['main']['feels_like'];
-    feelsLike = t.toInt();
-    visibility = jsonDecode(data)['visibility'];
-    condition = jsonDecode(data)['weather'][0]['id'];
+    try {
+      var t = jsonDecode(data)['main']['temp'];
+      temp = t.toInt();
+      lat = jsonDecode(data)['coord']['lat'];
+      lon = jsonDecode(data)['coord']['lon'];
+      location = jsonDecode(data)['name'];
+      pressure = jsonDecode(data)['main']['pressure'];
+      humidity = jsonDecode(data)['main']['humidity'];
+      windSpeed = jsonDecode(data)['wind']['speed'];
+      description = jsonDecode(data)['weather'][0]['description'];
+      main = jsonDecode(data)['weather'][0]['main'];
+      t = jsonDecode(data)['main']['feels_like'];
+      feelsLike = t.toInt();
+      visibility = jsonDecode(data)['visibility'];
+      condition = jsonDecode(data)['weather'][0]['id'];
+    } catch (e) {
+      temp = 'X';
+      lat = 0.0000000;
+      lon = 0.0000000;
+      location = 'Not Found!';
+      feelsLike = 'X';
+      pressure = 'X';
+      humidity = 'X';
+      windSpeed = 'X';
+      description = '';
+      main = '';
+      condition = -1;
+      visibility = 'X';
+      coma = '';
+    }
   }
 
   @override
@@ -182,7 +199,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        main + ',',
+                        main + coma,
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'Ubuntu',
