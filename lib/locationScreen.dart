@@ -68,6 +68,7 @@ class _LocationScreenState extends State<LocationScreen> {
         constraints: BoxConstraints.expand(),*/
         child: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,61 +103,65 @@ class _LocationScreenState extends State<LocationScreen> {
                   ),
                 ],
               ),
-              SizedBox(
+              /*SizedBox(
                 height: 50,
-              ),
-              Text(
-                location,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Ubuntu',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 50,
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              ),*/
+              Column(
                 children: [
                   Text(
-                    'Latitude: ' + lat.toStringAsFixed(5),
+                    location,
                     style: TextStyle(
-                      color: Colors.blue[200],
+                      color: Colors.black,
                       fontFamily: 'Ubuntu',
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontSize: 50,
                     ),
                   ),
                   SizedBox(
-                    width: 10,
+                    height: 10,
                   ),
-                  Text(
-                    'Longitude: ' + lon.toStringAsFixed(5),
-                    style: TextStyle(
-                      color: Colors.blue[200],
-                      fontFamily: 'Ubuntu',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Latitude: ' + lat.toStringAsFixed(5),
+                        style: TextStyle(
+                          color: Colors.blue[200],
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'Longitude: ' + lon.toStringAsFixed(5),
+                        style: TextStyle(
+                          color: Colors.blue[200],
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              SizedBox(
+              /*SizedBox(
                 height: 50,
-              ),
-              Text(
-                temp.toString() + '°C',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Ubuntu',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 130,
-                ),
-              ),
+              ),*/
               Column(
                 children: [
+                  Text(
+                    temp.toString() + '°C',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Ubuntu',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 130,
+                    ),
+                  ),
                   Text(
                     'Feels Like ' + feelsLike.toString() + '°C',
                     style: TextStyle(
@@ -167,7 +172,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   Text(
                     weatherDetails.getWeatherIcon(condition),
@@ -219,9 +224,9 @@ class _LocationScreenState extends State<LocationScreen> {
                       fontSize: 15,
                     ),
                   ),
-                  SizedBox(
+                  /*SizedBox(
                     height: 10,
-                  ),
+                  ),*/
                   Text(
                     'Pressure: ' + pressure.toString() + ' Pa',
                     style: TextStyle(
@@ -231,9 +236,9 @@ class _LocationScreenState extends State<LocationScreen> {
                       fontSize: 15,
                     ),
                   ),
-                  SizedBox(
+                  /*SizedBox(
                     height: 10,
-                  ),
+                  ),*/
                   Text(
                     'Wind Speed: ' + windSpeed.toString() + ' Km/h',
                     style: TextStyle(
@@ -243,9 +248,9 @@ class _LocationScreenState extends State<LocationScreen> {
                       fontSize: 15,
                     ),
                   ),
-                  SizedBox(
+                  /*SizedBox(
                     height: 10,
-                  ),
+                  ),*/
                   Text(
                     'Visibility: ' + visibility.toString() + ' Km',
                     style: TextStyle(
@@ -257,9 +262,6 @@ class _LocationScreenState extends State<LocationScreen> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 40,
-              ),
               Text(
                 weatherDetails.getMessage(temp),
                 style: TextStyle(
@@ -268,6 +270,9 @@ class _LocationScreenState extends State<LocationScreen> {
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
+              ),
+              SizedBox(
+                height: 20,
               ),
             ],
           ),
