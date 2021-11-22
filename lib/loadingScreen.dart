@@ -1,10 +1,8 @@
-import 'package:angela3_i_m_rich/location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:geolocator/geolocator.dart';
 
 import 'locationScreen.dart';
-import 'networkAPI.dart';
+import 'weatherDetails.dart';
 
 const apiKey = '331533c0cc2197e929ea79cdb2a70e33';
 
@@ -16,28 +14,20 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingState extends State<LoadingScreen> {
   late double latitude;
   late double longitude;
-
+  WeatherDetails parseData = WeatherDetails();
   @override
   void initState() {
     super.initState();
-    getCurrentLocationData();
+    waitForData();
   }
 
-  void getCurrentLocationData() async {
-    try {
-      Location location = Location();
-      Position position = await location.getLocation();
-      NetworkHelper networkHelper = NetworkHelper(
-          'http://api.openweathermap.org/data/2.5/weather?lat=${position.latitude}&lon=${position.longitude}&appid=$apiKey&units=metric');
-      var locationData = await networkHelper.getLocationData();
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return LocationScreen(
-          data: locationData,
-        );
-      }));
-    } catch (e) {
-      print(e);
-    }
+  void waitForData() async {
+    var locationData = await parseData.getCurrentLocationData();
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return LocationScreen(
+        data: locationData,
+      );
+    }));
   }
 
   @override

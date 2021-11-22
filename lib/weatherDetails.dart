@@ -1,4 +1,32 @@
+import 'package:geolocator/geolocator.dart';
+
+import 'location.dart';
+import 'networkAPI.dart';
+
+const apiKey = '331533c0cc2197e929ea79cdb2a70e33';
+const weatherLink = 'http://api.openweathermap.org/data/2.5/weather';
+
 class WeatherDetails {
+  Future<dynamic> getSearchedLocationData(String cityName) async {
+    NetworkHelper getInfo =
+        NetworkHelper('$weatherLink?q=$cityName&appid=$apiKey&units=metric');
+    var searchedLocationData = await getInfo.getLocationData();
+    return searchedLocationData;
+  }
+
+  Future<dynamic> getCurrentLocationData() async {
+    try {
+      Location location = Location();
+      Position position = await location.getLocation();
+      NetworkHelper networkHelper = NetworkHelper(
+          '$weatherLink?lat=${position.latitude}&lon=${position.longitude}&appid=$apiKey&units=metric');
+      var locationData = await networkHelper.getLocationData();
+      return locationData;
+    } catch (e) {
+      return e;
+    }
+  }
+
   String getWeatherIcon(int condition) {
     if (condition < 300) {
       return '⛈';

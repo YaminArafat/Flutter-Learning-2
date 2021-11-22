@@ -1,7 +1,5 @@
-import 'package:angela3_i_m_rich/locationScreen.dart';
+import 'package:angela3_i_m_rich/weatherDetails.dart';
 import 'package:flutter/material.dart';
-
-import 'networkAPI.dart';
 
 const borderStyle = OutlineInputBorder(
   borderSide: BorderSide(
@@ -9,7 +7,6 @@ const borderStyle = OutlineInputBorder(
     width: 3,
   ),
 );
-const apiKey = '331533c0cc2197e929ea79cdb2a70e33';
 
 class CityScreen extends StatefulWidget {
   @override
@@ -18,16 +15,9 @@ class CityScreen extends StatefulWidget {
 
 class _CityScreenState extends State<CityScreen> {
   TextEditingController searchedLocation = TextEditingController();
+  WeatherDetails parseData = WeatherDetails();
   String? errorLocation;
   late String cityName;
-  void getSearchedLocationData(String cityName) async {
-    NetworkHelper getInfo = NetworkHelper(
-        'http://api.openweathermap.org/data/2.5/weather?q=$cityName&appid=$apiKey&units=metric');
-    var searchedLocationData = await getInfo.getLocationData();
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return LocationScreen(data: searchedLocationData);
-    }));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +105,12 @@ class _CityScreenState extends State<CityScreen> {
                       } else if (searchedLocation.text.isNotEmpty) {
                         //errorLocation = null;
                         cityName = searchedLocation.text.toLowerCase();
-                        getSearchedLocationData(cityName);
+                        var searchedLocationData =
+                            parseData.getSearchedLocationData(cityName);
+                        Navigator.pop(context, searchedLocationData);
+                        /*Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return LocationScreen(data: searchedLocationData);
+    }));*/
                       }
                     });
                   },

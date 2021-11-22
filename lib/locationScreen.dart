@@ -16,18 +16,18 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  late int temp;
-  late double lat;
-  late double lon;
-  late String location;
-  late int pressure;
-  late int humidity;
-  late double windSpeed;
-  late String description;
-  late String main;
-  late int feelsLike;
-  late int visibility;
-  late int condition;
+  late var temp;
+  late var lat;
+  late var lon;
+  late var location;
+  late var pressure;
+  late var humidity;
+  late var windSpeed;
+  late var description;
+  late var main;
+  late var feelsLike;
+  late var visibility;
+  late var condition;
   WeatherDetails weatherDetails = WeatherDetails();
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   void updateUI(dynamic data) {
-    double t = jsonDecode(data)['main']['temp'];
+    var t = jsonDecode(data)['main']['temp'];
     temp = t.toInt();
     lat = jsonDecode(data)['coord']['lat'];
     lon = jsonDecode(data)['coord']['lon'];
@@ -57,15 +57,6 @@ class _LocationScreenState extends State<LocationScreen> {
     return Scaffold(
       body: Container(
         color: Colors.blueAccent,
-        /*decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('images/weather5.jpg'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                Colors.white.withOpacity(0.5), BlendMode.dstATop),
-          ),
-        ),
-        constraints: BoxConstraints.expand(),*/
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,12 +66,10 @@ class _LocationScreenState extends State<LocationScreen> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      setState(() {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return CityScreen();
-                        }));
-                      });
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return LoadingScreen();
+                      }));
                     },
                     child: Icon(
                       Icons.near_me,
@@ -89,11 +78,14 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
-                      Navigator.push(context,
+                    onPressed: () async {
+                      var cityData = await Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return LoadingScreen();
+                        return CityScreen();
                       }));
+                      setState(() {
+                        updateUI(cityData);
+                      });
                     },
                     child: Icon(
                       Icons.location_city,
@@ -281,3 +273,13 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 }
+
+/*decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/weather5.jpg'),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+                Colors.white.withOpacity(0.5), BlendMode.dstATop),
+          ),
+        ),
+        constraints: BoxConstraints.expand(),*/
