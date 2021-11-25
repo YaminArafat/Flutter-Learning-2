@@ -12,13 +12,13 @@ const List<String> currencyList = [
   'JPY',
   //'MXN',
   //'NOK',
-  'NZD',
+  /* 'NZD',
   'PLN',
   'RON',
   'RUB',
   'SEK',
   'SGD',
-  'USD',
+  'USD',*/
   //'ZAR',
 ];
 

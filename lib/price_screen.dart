@@ -85,6 +85,9 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   void getData(String selectedCurrency) async {
+    valueBTC = '?';
+    valueETH = '?';
+    valueLTC = '?';
     var tempBTC =
         await PriceFromApi(cryptoType: 'BTC', currency: selectedCurrency)
             .getPriceData();
