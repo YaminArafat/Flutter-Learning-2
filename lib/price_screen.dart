@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'coin_data.dart';
+import 'price_api.dart';
 
 const textStyle = TextStyle(
   fontFamily: 'Ubuntu',
@@ -16,7 +17,7 @@ class PriceScreen extends StatefulWidget {
 }
 
 class _PriceScreenState extends State<PriceScreen> {
-  String selectedItems = currencyList.first;
+  String selectedCurrency = currencyList.first;
 
   Center androidDropdown() {
     List<DropdownMenuItem<String>>? items = [];
@@ -30,10 +31,11 @@ class _PriceScreenState extends State<PriceScreen> {
     }
     return Center(
       child: DropdownButton<String>(
-        value: selectedItems,
+        value: selectedCurrency,
         //menuMaxHeight: 200,
         style: TextStyle(
           fontFamily: 'Ubuntu',
+          fontSize: 20,
         ),
         borderRadius: BorderRadius.circular(10),
         dropdownColor: Colors.black,
@@ -41,8 +43,10 @@ class _PriceScreenState extends State<PriceScreen> {
         items: items,
         onChanged: (value) {
           setState(() {
-            selectedItems = value!;
+            selectedCurrency = value!;
           });
+
+          getData(selectedCurrency);
         },
       ),
     );
@@ -58,6 +62,10 @@ class _PriceScreenState extends State<PriceScreen> {
           ),
           child: Text(
             currency,
+            style: TextStyle(
+              fontFamily: 'Ubuntu',
+              fontSize: 20,
+            ),
           ),
         ),
       );
@@ -69,12 +77,33 @@ class _PriceScreenState extends State<PriceScreen> {
         itemExtent: 40,
         onSelectedItemChanged: (selectedIndex) {
           setState(() {
-            selectedItems = currencyList[selectedIndex];
+            selectedCurrency = currencyList[selectedIndex];
           });
         },
       ),
     );
   }
+
+  void getData(String selectedCurrency) async {
+    var tempBTC =
+        await PriceFromApi(cryptoType: 'BTC', currency: selectedCurrency)
+            .getPriceData();
+    /*var tempETH =
+        await PriceFromApi(cryptoType: 'ETH', currency: selectedCurrency)
+            .getPriceData();
+    var tempLTC =
+        await PriceFromApi(cryptoType: 'LTC', currency: selectedCurrency)
+            .getPriceData();*/
+    setState(() {
+      valueBTC = tempBTC.toString();
+      valueETH = tempBTC.toString();
+      valueLTC = tempBTC.toString();
+    });
+  }
+
+  var valueBTC = '?';
+  var valueETH = '?';
+  var valueLTC = '?';
 
   /*Widget? getPlatform() {
     if (Platform.isAndroid) {
@@ -84,6 +113,12 @@ class _PriceScreenState extends State<PriceScreen> {
     }
   }
 */
+  @override
+  void initState() {
+    super.initState();
+    getData('AUD');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,27 +134,69 @@ class _PriceScreenState extends State<PriceScreen> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          PriceInfo(
+            value: valueBTC,
+            selectedCurrency: selectedCurrency,
+            cryptoType: 'BTC',
+          ),
+          PriceInfo(
+            value: valueETH,
+            selectedCurrency: selectedCurrency,
+            cryptoType: 'ETH',
+          ),
+          PriceInfo(
+            value: valueLTC,
+            selectedCurrency: selectedCurrency,
+            cryptoType: 'LTC',
+          ),
+          SizedBox(
+            height: 100,
+          ),
           Card(
-            margin: EdgeInsets.all(20),
-            color: Colors.lightBlueAccent,
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Center(
-                child: Text(
-                  'sefsf',
-                ),
-              ),
+            margin: EdgeInsets.all(60),
+            color: Colors.green,
+            child: Platform.isAndroid ? androidDropdown() : iOSPicker(),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class PriceInfo extends StatelessWidget {
+  const PriceInfo({
+    Key? key,
+    required this.cryptoType,
+    required this.value,
+    required this.selectedCurrency,
+  }) : super(key: key);
+
+  final String value;
+  final String selectedCurrency;
+  final String cryptoType;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.only(
+        left: 15,
+        right: 15,
+        top: 15,
+      ),
+      color: Colors.blueGrey,
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Center(
+          child: Text(
+            '1 $cryptoType = $value $selectedCurrency',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Ubutnu',
+              fontSize: 20,
             ),
           ),
-          Container(
-            height: 100,
-            width: double.infinity,
-            color: Colors.blueAccent,
-            child: Platform.isAndroid ? androidDropdown() : iOSPicker(),
-          ),
-        ],
+        ),
       ),
     );
   }

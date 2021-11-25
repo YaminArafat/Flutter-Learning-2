@@ -6,12 +6,12 @@ const List<String> currencyList = [
   'EUR',
   'GBP',
   'HKD',
-  'IDR',
-  'ILS',
+  //'IDR',
+  //'ILS',
   'INR',
   'JPY',
-  'MXN',
-  'NOK',
+  //'MXN',
+  //'NOK',
   'NZD',
   'PLN',
   'RON',
@@ -19,7 +19,7 @@ const List<String> currencyList = [
   'SEK',
   'SGD',
   'USD',
-  'ZAR',
+  //'ZAR',
 ];
 
 const List<String> cryptoList = [
