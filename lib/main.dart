@@ -1,4 +1,4 @@
-import 'package:angela3_i_m_rich/loadingScreen.dart';
+import 'package:angela3_i_m_rich/price_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
         body: Destiny(),
         ),*/
       //home: BMIcalc(),
-      home: LoadingScreen(),
+      //home: LoadingScreen(),
+      home: PriceScreen(),
       /*routes: {
         '/results': (context) => ResultsPage(),
       },*/
