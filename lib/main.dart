@@ -1,4 +1,7 @@
-import 'package:angela3_i_m_rich/price_screen.dart';
+import 'package:angela3_i_m_rich/chat_screen.dart';
+import 'package:angela3_i_m_rich/login_screen.dart';
+import 'package:angela3_i_m_rich/registration_screen.dart';
+import 'package:angela3_i_m_rich/welcome_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +27,15 @@ class MyApp extends StatelessWidget {
         ),*/
       //home: BMIcalc(),
       //home: LoadingScreen(),
-      home: PriceScreen(),
+      // home: PriceScreen(),
+      //home: null,
+      initialRoute: WelcomeScreen.id,
+      routes: {
+        WelcomeScreen.id: (context) => WelcomeScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
+        ChatScreen.id: (context) => ChatScreen(),
+      },
       /*routes: {
         '/results': (context) => ResultsPage(),
       },*/
