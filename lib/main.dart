@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Color(0xFF1E1531),
         scaffoldBackgroundColor: Color(0xFF1E1531),
       ),*/
-      theme: ThemeData.dark(),
+      // theme: ThemeData.dark(),
       /*home: Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(

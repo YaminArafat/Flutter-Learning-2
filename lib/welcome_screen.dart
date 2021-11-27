@@ -1,3 +1,4 @@
+import 'package:angela3_i_m_rich/constants.dart';
 import 'package:angela3_i_m_rich/login_screen.dart';
 import 'package:angela3_i_m_rich/registration_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,10 +11,55 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  bool isDarkMode = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      ///
+      backgroundColor: backgroundColor,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(
+          top: 40,
+        ),
+        child: Align(
+          alignment: Alignment.topRight,
+          child: Switch(
+            value: isDarkMode,
+
+            ///
+            activeColor: activeSwitchColor,
+            activeTrackColor: activeSwitchTrackColor,
+            //inactiveTrackColor: inactiveSwitchTrackColor,
+            onChanged: (value) {
+              setState(() {
+                isDarkMode = value;
+                if (isDarkMode) {
+                  backgroundColor = Colors.black;
+                  inputTextColor = Colors.white;
+                  hintTextColor = Colors.white60;
+                  iconColor = Colors.white60;
+                  borderColor = Colors.white;
+                  cursorColor = Colors.white;
+
+                  /*activeSwitchColor = Colors.white;
+                  activeSwitchTrackColor = Colors.white38;
+                  inactiveSwitchTrackColor = Colors.white10;*/
+                } else {
+                  backgroundColor = Colors.white;
+                  inputTextColor = Colors.black;
+                  hintTextColor = Colors.black45;
+                  iconColor = Colors.black45;
+                  borderColor = Colors.black;
+                  cursorColor = Colors.black;
+                  /*activeSwitchColor = Colors.blue;
+                  activeSwitchTrackColor = Colors.lightBlueAccent;
+                  inactiveSwitchTrackColor = Colors.white;*/
+                }
+              });
+            },
+          ),
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24),
         child: Column(
@@ -33,6 +79,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     fontSize: 50,
                     fontFamily: 'Pacifico',
                     fontWeight: FontWeight.bold,
+
+                    ///
                     color: Colors.orangeAccent,
                   ),
                 ),
@@ -43,12 +91,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 top: 50,
                 left: 20,
                 right: 20,
+                bottom: 10,
               ),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(Colors.lightBlueAccent),
-                ),
+              child: CupertinoButton(
+                ///
+                color: Colors.lightBlueAccent,
+                borderRadius: BorderRadius.circular(20),
                 onPressed: () {
                   Navigator.pushNamed(context, LoginScreen.id);
                 },
@@ -58,6 +106,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Ubuntu',
                     fontSize: 20,
+                    letterSpacing: 2,
+
+                    ///
                     color: Colors.white,
                   ),
                 ),
@@ -68,11 +119,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 left: 20,
                 right: 20,
               ),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(Colors.greenAccent),
-                ),
+              child: CupertinoButton(
+                ///
+                color: Colors.greenAccent,
+                borderRadius: BorderRadius.circular(20),
                 onPressed: () {
                   Navigator.pushNamed(context, RegistrationScreen.id);
                 },
@@ -82,6 +132,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Ubuntu',
                     fontSize: 20,
+                    letterSpacing: 2,
+
+                    ///
                     color: Colors.black,
                   ),
                 ),
